@@ -1,5 +1,7 @@
 version: "3"
 
+name: iptvmanager
+
 services:
   manager:
     build:
@@ -9,19 +11,21 @@ services:
     ports:
       - 8088:8088/tcp
     volumes:
-      - ./volumes/static/:/app/staticfiles/
-      - ./volumes/database/:/app/database/
+      - ../docker/IPTV-Manager/volumes/static/:/app/staticfiles/
+      - ../docker/IPTV-Manager/volumes/database/:/app/database/
     environment:
+      - PUID=1000
+      - PGID=1000
     # - ALLOWED_HOSTS: "['*']"    
-    # - TIME_ZONE=UTC
+      - TIME_ZONE=America/Toronto
     # - DJANGO_SUPERUSER_USERNAME=admin
     # - DJANGO_SUPERUSER_EMAIL=admin@admin.com
     # - DJANGO_SUPERUSER_PASSWORD=password
-      - SECRET_KEY=
+      - SECRET_KEY=yrik%455_u146w)*dwt88)k(5ew*3rx6oj-ed290r-k9(+=t%x
     # - DEBUG=True
     # - DEBUGLEVEL=DEBUG
     # - SOCKET_ADDRESS="0.0.0.0"
-    # - MANAGEMENT_URL=http://localhost
+      - MANAGEMENT_URL=http://192.168.1.61
     # - INTERNAL_MANAGEMENT_PORT=8088
     # - EXTERNAL_MANAGEMENT_PORT=8088
     # - INTERNAL_TIMEOUT=1
@@ -44,13 +48,13 @@ services:
     environment:
     # - DEBUG=True
     # - SOCKET_ADDRESS=0.0.0.0
-      - REPORTING_URL=http://manager # Match your management container's name if running in the same stack
+      - REPORTING_URL=http://IPTV-Manager # Match your management container's name if running in the same stack
     # - REPORTING_PORT=8088
     # - REPORTING_TIMEOUT=5
     # - PROXY_NAME=IPTV-Proxy
-      - INTERNAL_PROXY_URL=http://proxy # Match your proxy container's name if running in the same stack
+      - INTERNAL_PROXY_URL=http://IPTV-Proxy # Match your proxy container's name if running in the same stack
     # - INTERNAL_PROXY_PORT=8089
-    # - EXTERNAL_PROXY_URL=http://localhost
+      - EXTERNAL_PROXY_URL=http://192.168.1.61
     # - EXTERNAL_PROXY_PORT=8089
     # - USER_AGENT_STRING=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36)
     # - STREAM_TIMEOUT=15
